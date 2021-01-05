@@ -1,6 +1,7 @@
-from readword import get_word
+from getword import read_text, read_web
 
-word = get_word(15)
+# word = read_text(15)  # read from text file
+word = read_web()
 wl = len(word)  # word length
 MAX_ATTEMPTS = 6
 # print(wl)
@@ -12,7 +13,10 @@ gameState = True
 key = list(word)
 errors = 0
 print(f"There are {wl} letters")
-
+display = ""
+for i in range(wl):
+    display += "_"
+print(display)
 
 while gameState:
     input1 = ""
@@ -47,5 +51,5 @@ while gameState:
         print("Game win")
         gameState = False
     elif errors == MAX_ATTEMPTS:
-        print("Game Over! \nRan out of tries")
+        print(f"Game Over! \nRan out of tries\n The word was {word}")
         gameState = False
