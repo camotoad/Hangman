@@ -22,15 +22,14 @@ def read_web():
     try:
         response = requests.get('http://randomword.com')
         soup = BeautifulSoup(response.text, 'html.parser')
-    except:
-        print("Error retrieving word online")
-        print("Taking a random word from words.txt")
-        read_text()
-    else:
         line = soup.find(id='random_word')
         word = line.string
         # print(word)
         return word
+    except:
+        print("Error retrieving word online")
+        print("Taking a random word from words.txt")
+        read_text()
 
 
 """
