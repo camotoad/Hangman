@@ -37,7 +37,7 @@ class Controller:
         for i in range(26):
             x = self.startx + self.GAP * 2 + ((self.RADIUS * 2 + self.GAP) * (i % 13))  # reset row if 13th letter+
             y = self.starty + ((i // 13) * self.GAP + self.RADIUS * 2)  # next row if 13th letter+
-            self.letters.append([x, y, chr(self.A + i), True])
+            self.letters.append([x, y, chr(self.A + i)])
 
         for i in range(7):
             image = pygame.image.load("hangman" + str(i) + ".png")
@@ -84,8 +84,8 @@ class Controller:
 
         # draw buttons
         for letter in self.letters:
-            x, y, char, visible = letter
-            if visible:
+            x, y, char = letter
+            if letter not in self.wrong:
                 pygame.draw.circle(win, color_black, (x, y), self.RADIUS, 3)
                 text = LETTER_FONT.render(char, 1, color_black)
                 win.blit(text, (x - text.get_width() / 2, y - text.get_height() / 2))
