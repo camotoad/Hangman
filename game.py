@@ -1,4 +1,3 @@
-from getword import read_web
 import pygame
 import sys
 from pygame.locals import *
@@ -13,8 +12,8 @@ color_black = (0, 0, 0)
 color_white = (255, 255, 255)
 
 # fonts
-title = pygame.font.SysFont("comicsans", 60)
-font1 = pygame.font.SysFont("comicsans", 40)
+TITLE_FONT = pygame.font.SysFont("comicsans", 60)
+BUTTON_FONT = pygame.font.SysFont("comicsans", 40)
 
 
 def drawtext(text, font, color, win, x, y):
@@ -44,8 +43,8 @@ def main_menu():
         screen.fill(color_white)
         pygame.draw.rect(screen, color_black, buttonPlay)
 
-        drawTextCentered('PLAY', color_white, font1, screen, screen.get_width()/2 , buttonPlay.y + buttonPlay.height/2)
-        drawTextCentered('HANGMAN', color_black, title, screen, screen.get_width()/2, 55)
+        drawTextCentered('PLAY', color_white, BUTTON_FONT, screen, screen.get_width() / 2, buttonPlay.y + buttonPlay.height / 2)
+        drawTextCentered('HANGMAN', color_black, TITLE_FONT, screen, screen.get_width() / 2, 55)
         pygame.display.update()
 
         mx, my = pygame.mouse.get_pos()

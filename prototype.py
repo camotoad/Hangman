@@ -13,9 +13,7 @@ gameState = True
 key = list(word)
 errors = 0
 print(f"There are {wl} letters")
-display = ""
-for i in range(wl):
-    display += "_"
+display = "_" * wl
 print(display)
 
 while gameState:
