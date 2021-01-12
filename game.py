@@ -65,7 +65,7 @@ def main_menu():
 
 
 def main_game():
-    screen2 = pygame.display.set_mode((800, 500), 0, 32)
+    screen2 = pygame.display.set_mode((800, 500))
     pygame.display.set_caption('Hangman Game')
     running = True
 
