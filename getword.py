@@ -13,19 +13,20 @@ def read_text():
     # print(words[lineToRead])
     word = words[lineToRead]
     if len(word) > 4:      # no 2 lettered or lower words preferably
-        return word[:-1]  # return word without \n from text file
+        return word[:-1].upper()  # return word without \n from text file
     # print(f"<2 letter {word}")
     return read_text()
 
 
 def read_web():
     try:
+        print("Retrieving word from the internet...")
         response = requests.get('http://randomword.com')
         soup = BeautifulSoup(response.text, 'html.parser')
         line = soup.find(id='random_word')
         word = line.string
         # print(word)
-        return word
+        return word.upper()
     except:
         print("Error retrieving word online")
         print("Taking a random word from words.txt")

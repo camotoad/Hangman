@@ -1,10 +1,10 @@
-from getword import read_web
-from game import drawtext
+from getword import read_web, read_text
 import pygame
 import sys
 from pygame.locals import *
 import math
 
+pygame.font.init()
 # colours
 color_black = (0, 0, 0)
 color_white = (255, 255, 255)
@@ -19,7 +19,7 @@ class Controller:
     GAP = 15
     RADIUS = 20
     startx = 40
-    starty = 400
+    starty = 350
 
     def __init__(self):
         self.guessed = []
@@ -30,46 +30,54 @@ class Controller:
         self.wl = len(self.word)
         self.key = list(self.word)
         self.gameState = None
-        self.display = "_" * self.wl
+        self.display = "_ " * self.wl
         self.MAX_ATTEMPTS = 6
 
         self.letters = []
         for i in range(26):
             x = self.startx + self.GAP * 2 + ((self.RADIUS * 2 + self.GAP) * (i % 13))  # reset row if 13th letter+
-            y = self.starty + ((i // 13) * self.GAP + self.RADIUS * 2)  # next row if 13th letter+
+            y = self.starty + ((i // 13) * 50 + self.RADIUS * 2)  # next row if 13th letter+
             self.letters.append([x, y, chr(self.A + i)])
-
+        self.images = []
         for i in range(7):
             image = pygame.image.load("hangman" + str(i) + ".png")
             self.images.append(image)
 
     def get_word(self):
-        print(f"{self.word}, {self.wl}")
+        # print(f"{self.word}, {self.wl}")
         return self.word
 
+    def get_radius(self):
+        return self.RADIUS
+
     def insert(self, guess):
+        self.display = ""
         self.guessed += guess
         for letter in self.word:
             if letter in self.guessed:
                 self.display += letter
                 if self.word.count(letter) > self.correct.count(letter):
                     self.correct.append(letter)
-                    self.wl -= 1
             else:
-                self.display += "_"
+                self.display += " _"
 
         for letter in self.guessed:
             if letter not in self.word and letter not in self.wrong:
                 self.errors += 1
                 self.wrong.append(letter)
+        """
+        print(f"Correct: {self.correct}\n"
+              f"Wrong: {self.wrong}\n"
+              f"Guessed: {self.guessed}\n")
+        """
 
     def check_GameState(self):
         if sorted(self.correct) == sorted(self.key):
-            print("Game win")
+            # print("Game win")
             gameState = True
             return gameState
         elif self.errors == self.MAX_ATTEMPTS:
-            print(f"Game Over! \nRan out of tries\n The word was {self.word}")
+            # print(f"Game Over! \nRan out of tries\n The word was {self.word}")
             gameState = False
             return gameState
         else:
@@ -78,17 +86,17 @@ class Controller:
 
     def draw(self, win):
         win.fill(color_white)
-
+        import game
         # draw word
-        drawtext(self.display, DISPLAY_FONT, color_black, win, 400, 200)
+        game.drawtext(self.display, DISPLAY_FONT, color_black, win, 200, 200)
 
         # draw buttons
         for letter in self.letters:
             x, y, char = letter
-            if letter not in self.wrong:
+            if char not in self.guessed:
                 pygame.draw.circle(win, color_black, (x, y), self.RADIUS, 3)
-                text = LETTER_FONT.render(char, 1, color_black)
+                text = LETTER_FONT.render(char, True, color_black)
                 win.blit(text, (x - text.get_width() / 2, y - text.get_height() / 2))
 
         # draw picture
-        win.blit(self.images[self.errors], (150, 100))
+        win.blit(self.images[self.errors], (50, 100))
