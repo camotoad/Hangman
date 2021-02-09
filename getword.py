@@ -25,8 +25,10 @@ def read_web():
         soup = BeautifulSoup(response.text, 'html.parser')
         line = soup.find(id='random_word')
         word = line.string
-        # print(word)
-        return word.upper()
+        if word.isalpha():
+            return word.upper()
+        else:
+            read_web()
     except:
         print("Error retrieving word online")
         print("Taking a random word from words.txt")

@@ -95,14 +95,18 @@ def main_game():
         if gc.check_GameState():
             screen2.fill(color_white)
             drawTextCentered("You win! The word was " + gc.get_word(), color_black, TITLE_FONT,
-                             screen2, screen2.get_width()/2, screen2.get_height()/2)
+                             screen2, screen2.get_width()/2, (screen2.get_height()/2) - 75)
+            drawTextCentered(gc.get_word(), color_black, TITLE_FONT,
+                             screen2, screen2.get_width() / 2, screen2.get_height() / 2)
             pygame.display.update()
             pygame.time.wait(5000)
             pygame.display.set_mode((300, 250))
             running = False
         elif gc.check_GameState() == False:
             screen2.fill(color_white)
-            drawTextCentered("You Lose! The word was " + gc.get_word(), color_black, TITLE_FONT,
+            drawTextCentered("You Lose! The word was ", color_black, TITLE_FONT,
+                             screen2, screen2.get_width() / 2, (screen2.get_height() / 2) - 75)
+            drawTextCentered(gc.get_word(), color_black, TITLE_FONT,
                              screen2, screen2.get_width() / 2, screen2.get_height() / 2)
             pygame.display.update()
             pygame.time.wait(5000)
